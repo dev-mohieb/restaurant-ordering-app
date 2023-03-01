@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- TITLE and DESC -->
+    <title>Restaurant Ordering App | Mohieb</title>
+    <meta
+      name="description"
+      content="Order your favorite delicious food using our fast delivery app"
+    />
+    <!-- CSS and JS -->
+    <link rel="stylesheet" href="/dist/output.css" />
+    <script src="./js/index.js" defer type="module"></script>
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&family=Smythe&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="">
+    <section
+      class="max-w-[600px] min-w-[392px] mx-auto xs:border xs:border-gray-300 xs:border-t-0 shadow-md"
+    >
+      <header
+        class="max-w-[600px] mx-auto h-44 px-12 py-8 font-smythe text-white bg-header bg-no-repeat bg-cover bg-center"
+      >
+        <h1 class="text-[40px]">Jimmy's Diner</h1>
+        <p class="text-2xl">The best burgers and pizzas in town.</p>
+      </header>
+      <main class="px-12 pt-4 pb-12">
+        <ul id="menu" class="flex flex-col">
+
+        </ul>
+        <section id="order-section" class="pt-12 font-smythe text-3xl hidden">
+            <h2 class="text-center">Your order</h2>
+            <section class="flex flex-col items-stretch mt-8">
+                <ul id="order-list" class="border-b-2 border-b-black pt-8 pb-4">
+                    <li class="flex gap-3 items-center">
+                        <h3 class="">Pizza</h3>
+                        <button class="text-xs font-nunito-sans -mb-1 text-descreptionTxDESIGN cursor-default md:cursor-pointer">remove</button>
+                        <p class="ml-auto text-xl">$14</p>
+                    </li>
+                </ul>
+                <article class="flex justify-between items-center pt-2 pb-8">
+                    <h3>
+                        Total price:
+                    </h3>
+                    <p id="total-price" class="text-xl">$</p>
+                </article>
+                <button
+                type="button" 
+                class="cursor-default text-white text-base font-nunito-sans font-bold bg-lightGreenDESIGN py-3 md:cursor-pointer">
+                    Complete order
+                </button>
+            </section>
+        </section>
+      </main>
+    </section>
+  </body>
+</html>
+
+
+
