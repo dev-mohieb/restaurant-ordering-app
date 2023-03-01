@@ -23,7 +23,7 @@
   </head>
   <body class="">
     <section
-      class="max-w-[600px] min-w-[392px] mx-auto xs:border xs:border-gray-300 xs:border-t-0 shadow-md"
+      class="relative max-w-[600px] min-w-[392px] mx-auto xs:border xs:border-gray-300 xs:border-t-0 shadow-md"
     >
       <header
         class="max-w-[600px] mx-auto h-44 px-12 py-8 font-smythe text-white bg-header bg-no-repeat bg-cover bg-center"
@@ -32,36 +32,65 @@
         <p class="text-2xl">The best burgers and pizzas in town.</p>
       </header>
       <main class="px-12 pt-4 pb-12">
-        <ul id="menu" class="flex flex-col">
-
-        </ul>
+        <ul id="menu" class="flex flex-col"></ul>
         <section id="order-section" class="pt-12 font-smythe text-3xl hidden">
-            <h2 class="text-center">Your order</h2>
-            <section class="flex flex-col items-stretch mt-8">
-                <ul id="order-list" class="border-b-2 border-b-black pt-8 pb-4">
-                    <li class="flex gap-3 items-center">
-                        <h3 class="">Pizza</h3>
-                        <button class="text-xs font-nunito-sans -mb-1 text-descreptionTxDESIGN cursor-default md:cursor-pointer">remove</button>
-                        <p class="ml-auto text-xl">$14</p>
-                    </li>
-                </ul>
-                <article class="flex justify-between items-center pt-2 pb-8">
-                    <h3>
-                        Total price:
-                    </h3>
-                    <p id="total-price" class="text-xl">$</p>
-                </article>
+          <h2 class="text-center">Your order</h2>
+          <section class="flex flex-col items-stretch mt-8">
+            <ul id="order-list" class="border-b-2 border-b-black pt-8 pb-4">
+              <li class="flex gap-3 items-center">
+                <h3 class="">Pizza</h3>
                 <button
-                type="button" 
-                class="cursor-default text-white text-base font-nunito-sans font-bold bg-lightGreenDESIGN py-3 md:cursor-pointer">
-                    Complete order
+                  class="text-xs font-nunito-sans -mb-1 text-descreptionTxDESIGN cursor-default md:cursor-pointer"
+                >
+                  remove
                 </button>
+                <p class="ml-auto text-xl">$14</p>
+              </li>
+            </ul>
+            <article class="flex justify-between items-center pt-2 pb-8">
+              <h3>Total price:</h3>
+              <p id="total-price" class="text-xl"></p>
+            </article>
+            <button
+              id="complete-order"
+              type="button"
+              class="cursor-default text-white text-base font-nunito-sans font-bold rounded bg-lightGreenDESIGN py-3 md:cursor-pointer"
+            >
+              Complete order
+            </button> 
             </section>
+          
         </section>
       </main>
+      <section
+        id="modal"
+        class="absolute top-0 bottom-0 left-0 right-0 w-full h-full bg-transparent z-10 hidden"
+      >
+        <section
+          id="modal-inner"
+          class="absolute top-0 bottom-0 left-0 right-0 m-auto w-full max-w-[84%] h-[450px] drop-shadow-2xl border-gray-400 border bg-white rounded flex flex-col z-20 px-6 pb-6 pt-10 gap-8 font-nunito-sans text-center"
+        >
+          <h2 class="text-2xl font-bold">Enter card details</h2>
+          <form action="" method="post" class="w-full flex flex-col gap-6 font-normal text-lg">
+            <input 
+            class="w-full border-gray-500 border rounded px-4 py-2 placeholder:text-gray-500 outline-green-300 text-lg"
+            type="text" name="full-name" id="full-name" placeholder="Enter your name" required>
+            <input 
+            class="w-full border-gray-500 border rounded px-4 py-2 placeholder:text-gray-500 outline-green-300 text-lg"
+            type="number" name="card-num" id="card-num" placeholder="Enter your card number" required>
+            <input 
+            class="w-full border-gray-500 border rounded px-4 py-2 placeholder:text-gray-500 outline-green-300 text-lg"
+            type="number" name="ccv" id="ccv" placeholder="Enter CCV" required>
+
+            <button
+            id="submit-btn"
+            class="bg-lightGreenDESIGN py-2 mt-4 rounded font-bold text-white cursor-default md:cursor-pointer"
+            type="submit">
+              Pay
+            </button>
+          </form>
+        </section>
+      </section>
     </section>
   </body>
 </html>
-
-
-

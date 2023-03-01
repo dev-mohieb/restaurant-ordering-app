@@ -4,25 +4,88 @@ const ul = document.querySelector("#menu");
 const orderList = document.querySelector("#order-list");
 const orderSection = document.querySelector("#order-section");
 const totalPrice = document.querySelector("#total-price");
-let total = 0;
-
+const completeOrderBtn = document.querySelector('#complete-order')
+const payBtn = document.querySelector('#submit-btn')
+const modal = document.querySelector('#modal')
+const modalInner = document.querySelector('#modal-inner')
+const form = document.querySelector('form')
+let total;
 
 document.addEventListener("click", (e) => {
   if (e.target.dataset.pizza) {
-    handlePizzaSelect(e.target.dataset.pizza);
-    e.target.classList.toggle("bg-green-400");
-    e.target.classList.toggle("bg-transparent");
+    handleSelectedItem(e.target.dataset.pizza, "pizza");
   } else if (e.target.dataset.burger) {
-    handleBurgerSelect(e.target.dataset.burger);
-    e.target.classList.toggle("bg-green-400");
-    e.target.classList.toggle("bg-transparent");
+    handleSelectedItem(e.target.dataset.burger, "burger");
   } else if (e.target.dataset.beer) {
-    handleBeerSelect(e.target.dataset.beer);
-    e.target.classList.toggle("bg-green-400");
-    e.target.classList.toggle("bg-transparent");
+    handleSelectedItem(e.target.dataset.beer, "beer");
+  } else if (e.target === completeOrderBtn) {
+    modal.classList.toggle('hidden')
+  } else if (e.target === modal) {
+    modal.classList.toggle('hidden')
   }
+
   renderOrder();
 });
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const formInput = new FormData(form);
+  const fullName = formInput.get('full-name')
+  
+  modalInner.innerHTML = `
+                        <h2 class="text-2xl font-bold">Hold on for a moment</h2>
+                        <img class="w-full" src="/images/loading.gif" alt="loading">
+  `
+  setTimeout( ()=>{
+    modal.classList.toggle('hidden')
+
+    orderSection.innerHTML = `
+            <section class="bg-[#ECFDF5] py-7 text-center text-3xl text-[#065F46]">
+              <p>
+                Thanks ${fullName}! Your order is on it's way!
+              </p>
+            </section>
+    `
+  }, 3000 )
+  document.querySelectorAll('button').forEach(btn => btn.disabled = true)
+})
+
+
+function handleSelectedItem(itemId, itemValue) {
+  // Specifically selecting the '+' btn to style it based on
+  // item.isSelected value because it broke when using
+  // the "remove" btn in the order section.
+  const SelectBtn = document.querySelector(`button[value="${itemValue}"]`);
+
+  const item = foodItems.filter((obj) => {
+    return obj.uuid === itemId;
+  })[0];
+
+  item.isSelected = !item.isSelected;
+
+  if (item.isSelected) {
+    SelectBtn.classList.toggle("bg-green-400");
+    SelectBtn.classList.toggle("bg-transparent");
+
+    // fixes NaN and undefined when subtracting from total default state, null.
+    if (total) {
+      total = totalPriceAdd(item);
+    } else total = item.price;
+  } else {
+    SelectBtn.classList.toggle("bg-green-400");
+    SelectBtn.classList.toggle("bg-transparent");
+
+    total = totalPriceSub(item);
+  }
+}
+
+// fixed calculating string numbers using these functions
+function totalPriceAdd(item) {
+  return parseInt(total) + parseInt(item.price);
+}
+function totalPriceSub(item) {
+  return parseInt(total) - parseInt(item.price);
+}
 
 function renderOrder() {
   let order = "";
@@ -40,49 +103,14 @@ function renderOrder() {
     }
   });
 
-  if (order != "") {
+  if (order) {
     orderSection.classList.remove("hidden");
   } else orderSection.classList.add("hidden");
 
   orderList.innerHTML = order;
+  totalPrice.textContent = `$${total}`;
 }
 
-function handlePizzaSelect() {
-  const pizza = foodItems.filter((item) => {
-    return item.name === "pizza";
-  })[0];
-  pizza.isSelected = !pizza.isSelected;
-
-  if (pizza.isSelected) {
-    totalPrice.textContent = (total + pizza.price);
-  } else {
-    totalPrice.textContent = (total - pizza.price)
-  }
-}
-function handleBurgerSelect() {
-  const burger = foodItems.filter((item) => {
-    return item.name === "burger";
-  })[0];
-  burger.isSelected = !burger.isSelected;
-
-  if (burger.isSelected) {
-    totalPrice.textContent = (total + burger.price);
-  } else {
-    totalPrice.textContent = (total - burger.price)
-  }
-}
-function handleBeerSelect() {
-  const beer = foodItems.filter((item) => {
-    return item.name === "beer";
-  })[0];
-  beer.isSelected = !beer.isSelected;
-
-  if (beer.isSelected) {
-    totalPrice.textContent += beer.price;
-  } else {
-    totalPrice.textContent -= beer.price
-  }
-}
 
 function renderMenu() {
   let htmlCode = "";
@@ -100,6 +128,7 @@ function renderMenu() {
                     </section>
                     <button
                     data-${item.name}="${item.uuid}" 
+                    value="${item.name}"
                     class="py-1 px-[13px] text-3xl font-nunito-sans ml-auto rounded-full border border-gray-300 text-plusSignTxDESIGN transition-colors bg-transparent cursor-default md:cursor-pointer">
                         +
                     </button>
